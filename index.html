@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uliana Khmel — Business Operations &amp; Project Management</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#EBE1D1;--warm:#FFFFFF;--sand:#E1D5C2;
+  --gold:#E9762B;--gold-light:#F7DCC4;--gold-dark:#B85A1E;
+  --navy:#000000;--navy-light:#E8E8E8;
+  --ink:#14130F;--ink2:#2e2e2e;--ink3:#5a574f;
+  --border:rgba(0,0,0,0.11);
+  --s1:0 2px 8px rgba(0,0,0,0.04);
+  --s2:0 8px 24px rgba(0,0,0,0.08);
+  --s3:0 20px 48px rgba(0,0,0,0.13);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.65;}
+
+/* CURSOR */
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s;mix-blend-mode:multiply;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(233,118,43,0.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.2s;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;transition:background 0.3s,box-shadow 0.3s;}
+nav.scrolled{background:rgba(235,225,209,0.94);backdrop-filter:blur(20px);box-shadow:0 1px 0 var(--border);}
+.nav-logo{font-family:'Lora',serif;font-size:1.2rem;color:var(--ink);text-decoration:none;letter-spacing:-0.02em;font-weight:500;}
+.nav-links{display:flex;gap:1.8rem;list-style:none;}
+.nav-links a{text-decoration:none;color:var(--ink3);font-size:0.83rem;font-weight:500;letter-spacing:0.025em;transition:color 0.2s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;background:var(--gold);transition:width 0.25s;}
+.nav-links a:hover,.nav-links a.active{color:var(--gold-dark);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-cta{background:var(--navy);color:#fff;padding:0.5rem 1.2rem;border-radius:100px;text-decoration:none;font-size:0.78rem;font-weight:500;transition:background 0.2s,transform 0.15s;}
+.nav-cta:hover{background:var(--ink);transform:translateY(-1px);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all 0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;background:rgba(235,225,209,0.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:1.5rem 2rem;flex-direction:column;gap:1rem;z-index:199;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{text-decoration:none;color:var(--ink2);font-size:1rem;font-weight:600;padding:0.6rem 0;border-bottom:1px solid var(--border);}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:var(--cream);}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.hero-content{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:8rem 2.5rem 5rem;display:grid;grid-template-columns:1.2fr 0.8fr;gap:5rem;align-items:center;width:100%;}
+.hero-text h1{font-family:'Lora',serif;font-size:clamp(2.2rem,3.5vw,3.4rem);line-height:1.1;letter-spacing:-0.028em;color:var(--ink);margin-bottom:1.4rem;}
+.hero-text h1 em{font-style:italic;color:var(--gold-dark);}
+.hero-word{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(32px);
+  animation:wordUp 0.65s forwards;
+  margin-right: 0.25em;
+}
+@keyframes wordUp{to{opacity:1;transform:translateY(0);}}
+.hero-p{font-size:0.94rem;line-height:1.85;color:var(--ink3);margin-bottom:0.8rem;opacity:0;animation:fadeSlide 0.7s forwards;}
+@keyframes fadeSlide{to{opacity:1;transform:translateY(0);}from{opacity:0;transform:translateY(14px);}}
+.hero-p strong{color:var(--ink2);font-weight:600;}
+.hero-btns{display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:1.8rem;opacity:0;animation:fadeSlide 0.7s 0.85s forwards;}
+.btn-primary{background:var(--gold);color:#fff;padding:0.75rem 1.8rem;border-radius:100px;text-decoration:none;font-size:0.84rem;font-weight:500;transition:all 0.2s;}
+.btn-primary:hover{background:var(--gold-dark);transform:translateY(-2px);box-shadow:0 6px 20px rgba(233,118,43,0.3);}
+.btn-outline{background:transparent;color:var(--ink);padding:0.75rem 1.8rem;border-radius:100px;text-decoration:none;font-size:0.84rem;font-weight:500;border:1px solid var(--border);transition:all 0.2s;}
+.btn-outline:hover{border-color:var(--navy);background:var(--sand);}
+.hero-photo-wrap{position:relative;display:flex;justify-content:center;align-items:center;opacity:0;animation:fadeSlide 0.8s 0.35s forwards;}
+.photo-blob{position:absolute;width:300px;height:370px;background:var(--gold-light);border-radius:60% 40% 55% 45%/45% 55% 40% 60%;top:18px;left:18px;animation:blobMorph 8s ease-in-out infinite;}
+@keyframes blobMorph{0%,100%{border-radius:60% 40% 55% 45%/45% 55% 40% 60%;}50%{border-radius:45% 55% 40% 60%/60% 40% 55% 45%;}}
+.hero-photo{width:300px;height:370px;object-fit:cover;object-position:center top;display:block;position:relative;z-index:1;border-radius:2rem 2rem 6rem 2rem;border:3px solid #fff;box-shadow:var(--s3);}
+.float-chip{position:absolute;background:#fff;border:1px solid var(--border);border-radius:12px;padding:0.45rem 0.8rem;font-size:0.7rem;font-weight:600;color:var(--ink2);box-shadow:var(--s2);white-space:nowrap;z-index:2;}
+.float-chip:nth-child(3){top:-10px;right:-22px;animation:floatA 4s ease-in-out infinite;}
+.float-chip:nth-child(4){bottom:48px;right:-30px;animation:floatA 4s 1.4s ease-in-out infinite;}
+.float-chip:nth-child(5){bottom:-8px;left:14px;animation:floatA 4s 2.2s ease-in-out infinite;}
+@keyframes floatA{0%,100%{transform:translateY(0);}50%{transform:translateY(-9px);}}
+
+/* STATS */
+.stats-wrap{max-width:1100px;margin:0 auto;padding:0 2.5rem 5rem;}
+.stats-strip{background:var(--navy);border-radius:1.5rem;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:var(--s2);overflow:hidden;}
+.stat{padding:2rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,0.2);cursor:default;}
+.stat:last-child{border-right:none;}
+.stat-num{font-family:'Lora',serif;font-size:2.1rem;color:var(--gold);letter-spacing:-0.04em;line-height:1;}
+.stat-label{font-size:0.7rem;color:#fff;margin-top:0.4rem;letter-spacing:0.04em;}
+
+/* SECTION BASE */
+.section-wrap{max-width:1100px;margin:0 auto;padding:5rem 2.5rem;}
+#experience .section-wrap{padding-bottom:3rem;}
+.eyebrow{font-size:0.67rem;font-weight:700;letter-spacing:0.15em;color:var(--gold-dark);text-transform:uppercase;margin-bottom:0.5rem;}
+.s-heading{font-family:'Lora',serif;font-size:clamp(1.8rem,2.8vw,2.4rem);letter-spacing:-0.025em;color:var(--ink);margin-bottom:2.5rem;line-height:1.13;}
+.divider{border:none;border-top:1px solid var(--border);margin:0 2.5rem;}
+
+/* EXPERIENCE */
+.exp-row{display:grid;grid-template-columns:200px 1fr;gap:2.5rem;padding:2.5rem 0;border-bottom:1px solid var(--border);opacity:0;transform:translateX(-20px);transition:opacity 0.55s ease,transform 0.55s ease;}
+.exp-row:first-child{padding-top:0;}
+.exp-row:last-child{border-bottom:none;padding-bottom:0;}
+.exp-row.vis{opacity:1;transform:translateX(0);}
+.exp-meta{position:relative;padding-top:0.2rem;}
+.exp-meta::after{content:'';position:absolute;right:-1.25rem;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,rgba(233,118,43,0.4),transparent);}
+.exp-date{font-size:0.78rem;color:var(--ink3);font-weight:500;}
+.exp-co{font-weight:700;font-size:0.97rem;color:var(--ink);margin:0.25rem 0;}
+.exp-loc{font-size:0.73rem;color:var(--ink3);}
+.exp-role{font-family:'Lora',serif;font-size:1.2rem;color:var(--ink);margin-bottom:0.9rem;}
+.exp-bullets{list-style:none;display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.2rem;}
+.exp-bullets li{font-size:0.88rem;color:var(--ink3);padding-left:1.1rem;position:relative;line-height:1.72;}
+.exp-bullets li::before{content:'';position:absolute;left:0;top:0.65rem;width:4px;height:4px;border-radius:50%;background:var(--gold);}
+.exp-bullets li strong{color:var(--ink2);font-weight:600;}
+.exp-note{margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.83rem;color:var(--ink3);line-height:1.7;font-style:italic;}
+
+/* TECH / SKILLS */
+#tech{position:relative;overflow:hidden;padding:5rem 0;background:#0A0A0A;}
+#tech-canvas{position:absolute;inset:0;width:100%;height:100%;}
+.tech-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:0 2.5rem;}
+.tech-heading-white{font-family:'Lora',serif;font-size:clamp(1.8rem,2.8vw,2.4rem);color:#fff;letter-spacing:-0.025em;margin-bottom:0.4rem;}
+.tech-sub{font-size:0.86rem;color:rgba(255,255,255,0.35);margin-bottom:2.8rem;}
+.skill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.9rem;}
+.skill-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);
+  border-radius:1rem;padding:1.2rem 1.3rem;cursor:default;
+  position:relative;overflow:hidden;
+  opacity:0;transform:translateY(22px);
+  transition:opacity 0.5s,transform 0.5s,background 0.22s,border-color 0.22s,box-shadow 0.22s;
+}
+.skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(233,118,43,0.16),transparent);opacity:0;transition:opacity 0.3s;}
+.skill-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(233,118,43,0.4);transform:translateY(-3px)!important;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.skill-card:hover::before{opacity:1;}
+.skill-card.vis{opacity:1;transform:translateY(0);}
+.sk-name{font-family:'Lora',serif;font-size:1.02rem;font-weight:600;color:#fff;letter-spacing:-0.01em;margin-bottom:0.85rem;position:relative;z-index:1;}
+.sk-tags{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:1;}
+.sk-tag{font-size:0.68rem;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.65);border:1px solid rgba(255,255,255,0.09);}
+
+/* SPEAKING / PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.15rem;}
+.proj-card{background:#fff;border:1px solid var(--border);border-radius:1.25rem;padding:1.75rem;position:relative;overflow:hidden;box-shadow:var(--s1);opacity:0;transform:translateY(26px) scale(0.98);transition:opacity 0.5s,transform 0.5s,box-shadow 0.25s;}
+.proj-card.vis{opacity:1;transform:translateY(0) scale(1);}
+.proj-card:hover{box-shadow:var(--s3);transform:translateY(-3px);}
+.proj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-dark));transform:scaleX(0);transform-origin:left;transition:transform 0.32s;}
+.proj-card:hover::after{transform:scaleX(1);}
+.proj-tags{display:flex;gap:0.32rem;flex-wrap:wrap;margin-bottom:0.75rem;}
+.ptag{font-size:0.6rem;font-weight:700;letter-spacing:0.05em;padding:0.18rem 0.52rem;border-radius:100px;background:var(--sand);color:var(--ink3);text-transform:uppercase;}
+.ptag.hot{background:var(--gold-light);color:var(--gold-dark);}
+.ptag.green{background:var(--navy-light);color:var(--navy);}
+.proj-link{display:inline-block;margin-top:0.85rem;font-size:0.75rem;font-weight:600;padding:0.32rem 0.75rem;border-radius:100px;background:var(--navy-light);color:var(--navy);text-decoration:none;transition:opacity 0.2s;}
+.proj-link:hover{opacity:0.72;}
+.carousel-wrap{position:relative;}
+.carousel-wrap::before,.carousel-wrap::after{content:'';position:absolute;top:0.3rem;bottom:1.5rem;width:64px;pointer-events:none;z-index:2;opacity:0;transition:opacity 0.25s;}
+.carousel-wrap::before{left:0;background:linear-gradient(90deg,var(--cream) 0%,rgba(235,225,209,0) 100%);}
+.carousel-wrap::after{right:0;background:linear-gradient(270deg,var(--cream) 0%,rgba(235,225,209,0) 100%);}
+.carousel-wrap.fade-left::before{opacity:1;}
+.carousel-wrap.fade-right::after{opacity:1;}
+.carousel-track{display:flex;gap:1.15rem;overflow-x:auto;scroll-snap-type:x proximity;padding:0.3rem 0 1.5rem;scrollbar-width:none;-ms-overflow-style:none;}
+.carousel-track::-webkit-scrollbar{display:none;}
+.carousel-track .proj-card{flex:0 0 380px;scroll-snap-align:start;}
+.carousel-arrow{position:absolute;top:42%;transform:translateY(-50%);background:none;border:none;padding:0;font-size:3rem;line-height:1;font-family:'DM Sans',sans-serif;cursor:pointer;z-index:3;color:var(--ink3);text-shadow:0 6px 16px rgba(0,0,0,0.35);transition:color 0.2s,transform 0.2s;}
+.carousel-arrow:hover{color:var(--gold-dark);transform:translateY(-50%) scale(1.15);}
+.carousel-prev{left:-34px;}
+.carousel-next{right:-34px;}
+.pub-filters{display:flex;gap:0.6rem;flex-wrap:wrap;margin-bottom:2rem;}
+.pub-filter{font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;padding:0.5rem 1.15rem;border-radius:100px;border:1px solid var(--border);background:#fff;color:var(--ink3);cursor:pointer;transition:all 0.2s;}
+.pub-filter:hover{border-color:var(--gold);color:var(--gold-dark);}
+.pub-filter.active{background:var(--gold);border-color:var(--gold);color:#fff;}
+.proj-org{font-size:0.69rem;color:var(--gold-dark);font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:0.55rem;}
+.proj-title{font-family:'Lora',serif;font-size:1.06rem;color:var(--ink);margin-bottom:0.32rem;letter-spacing:-0.02em;font-weight:600;}
+.proj-title a{color:inherit;text-decoration:none;border-bottom:1.5px solid var(--gold-light);transition:border-color 0.2s;}
+.proj-title a:hover{border-color:var(--gold);}
+.proj-desc{font-size:0.82rem;color:var(--ink3);line-height:1.72;}
+
+/* EDUCATION */
+#education{background:var(--sand);border-radius:2rem;margin:0 2.5rem;}
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.15rem;}
+.edu-card{background:#fff;border:1px solid var(--border);border-radius:1.25rem;padding:1.75rem;display:flex;gap:1rem;align-items:flex-start;box-shadow:var(--s1);opacity:0;transform:translateY(18px);transition:opacity 0.5s,transform 0.5s,box-shadow 0.25s;}
+.edu-card.vis{opacity:1;transform:translateY(0);}
+.edu-card:hover{box-shadow:var(--s2);transform:translateY(-2px);}
+.edu-icon{width:52px;height:52px;flex-shrink:0;border-radius:12px;background:#fff;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.4rem;position:relative;overflow:hidden;}
+.edu-icon::after{content:'';position:absolute;width:140%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.45),transparent);top:0;left:-140%;transition:left 0.55s ease;}
+.edu-card:hover .edu-icon::after{left:140%;}
+.edu-logo{width:74%;height:74%;object-fit:contain;position:relative;z-index:1;}
+.edu-degree{font-weight:600;font-size:0.9rem;color:var(--ink);margin-bottom:0.18rem;}
+.edu-degree a{color:inherit;text-decoration:none;border-bottom:1.5px solid var(--gold-light);transition:border-color 0.2s;}
+.edu-degree a:hover{border-color:var(--gold);}
+.edu-school{font-size:0.79rem;color:var(--gold-dark);font-weight:600;margin-bottom:0.14rem;}
+.edu-years{font-size:0.71rem;color:var(--ink3);}
+.edu-thesis{font-size:0.73rem;color:var(--ink3);margin-top:0.4rem;line-height:1.5;font-style:italic;}
+
+/* HOBBIES */
+#hobbies{background:linear-gradient(155deg,var(--navy) 0%,#1A1A1A 100%);position:relative;overflow:hidden;}
+.hobbies-inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:5rem 2.5rem;}
+.hobbies-inner .eyebrow{color:rgba(240,155,100,0.85);}
+.hobbies-inner .s-heading{color:#fff;}
+.hobby-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:1.1rem;}
+.hobby-card{background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.09);border-radius:1rem;padding:1.7rem;cursor:default;position:relative;overflow:hidden;opacity:0;transform:translateY(22px);transition:opacity 0.48s,transform 0.48s,background 0.22s,border-color 0.22s,box-shadow 0.22s;}
+.hobby-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(233,118,43,0.16),transparent);opacity:0;transition:opacity 0.3s;}
+.hobby-card.vis{opacity:1;transform:translateY(0);}
+.hobby-card:hover{background:rgba(255,255,255,0.1);border-color:rgba(233,118,43,0.4);transform:translateY(-3px)!important;box-shadow:0 8px 24px rgba(0,0,0,0.3);}
+.hobby-card:hover::before{opacity:1;}
+.hobby-icon{font-size:1.75rem;background:rgba(255,255,255,0.1);width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:12px;margin-bottom:0.85rem;position:relative;z-index:1;}
+.hobby-title{font-size:0.96rem;font-weight:600;color:#fff;margin-bottom:0.28rem;position:relative;z-index:1;}
+.hobby-sub{font-size:0.82rem;color:rgba(255,255,255,0.58);line-height:1.52;position:relative;z-index:1;}
+
+/* CONTACT */
+#contact{background:var(--cream);padding:5rem 2.5rem;}
+.contact-wrap{max-width:1100px;margin:0 auto;background:var(--navy);border-radius:2rem;padding:4.5rem;text-align:center;box-shadow:var(--s3);position:relative;overflow:hidden;}
+.contact-wrap::before{content:'';position:absolute;width:380px;height:380px;background:radial-gradient(circle,rgba(233,118,43,0.16),transparent 70%);top:-90px;right:-70px;pointer-events:none;animation:cpulse 5.5s ease-in-out infinite;}
+@keyframes cpulse{0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
+.contact-wrap .eyebrow{color:rgba(240,155,100,0.85);}
+.contact-wrap .s-heading{color:#fff;margin-bottom:0.75rem;}
+.contact-sub{color:rgba(255,255,255,0.58);margin-bottom:2.4rem;font-size:0.92rem;line-height:1.75;max-width:470px;margin-left:auto;margin-right:auto;}
+.contact-direct{margin-top:1.6rem;font-size:0.83rem;color:rgba(255,255,255,0.55);position:relative;z-index:1;}
+.contact-direct a{color:var(--gold);text-decoration:none;font-weight:600;}
+.contact-email-row{display:inline-flex;align-items:center;gap:0.45rem;}
+.copy-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.55);padding:2px;display:inline-flex;align-items:center;transition:color 0.2s;}
+.copy-btn:hover{color:var(--gold);}
+.copy-btn svg{width:14px;height:14px;}
+
+footer{text-align:center;padding:2.5rem;font-size:0.82rem;color:var(--ink3);border-top:1px solid var(--border);max-width:1100px;margin:0 auto;}
+footer a{color:var(--gold-dark);text-decoration:none;font-weight:600;}
+
+@media(max-width:768px){
+  .hero-content{grid-template-columns:1fr;text-align:center;gap:3rem;padding-top:7rem;}
+  .hero-photo-wrap{order:-1;}
+  .hero-btns{justify-content:center;}
+  .stats-strip{grid-template-columns:repeat(2,1fr);}
+  .exp-row{grid-template-columns:1fr;gap:0.6rem;}
+  .exp-meta::after{display:none;}
+  .proj-grid{grid-template-columns:1fr;}
+  .skill-grid{grid-template-columns:1fr;}
+  .carousel-track .proj-card{flex:0 0 85vw;}
+  .carousel-arrow{display:none;}
+  .nav-links,.nav-cta{display:none;}
+  .hamburger{display:flex;}
+  #education{margin:0 1rem;}
+  #contact{padding:3rem 1.25rem;}
+  .contact-wrap{padding:3rem 1.5rem;}
+  .tech-inner,.section-wrap,.stats-wrap{padding-left:1.25rem;padding-right:1.25rem;}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Uliana Khmel</a>
+  <ul class="nav-links">
+    <li><a href="#hero">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#tech">Skills</a></li>
+    <li><a href="#projects">Speaking</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:uliana.consult@gmail.com" class="nav-cta">Get in touch</a>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero" onclick="closeMob()">About</a>
+  <a href="#experience" onclick="closeMob()">Experience</a>
+  <a href="#tech" onclick="closeMob()">Skills</a>
+  <a href="#projects" onclick="closeMob()">Speaking</a>
+  <a href="#education" onclick="closeMob()">Education</a>
+  <a href="#publications" onclick="closeMob()">Publications</a>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <a href="mailto:uliana.consult@gmail.com" style="color:var(--gold-dark)">Get in touch</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 id="hero-h1"></h1>
+      <p class="hero-p" style="animation-delay:0.55s">I connect engineering capability with real business outcomes. <strong>Leading operations in AI-driven legaltech</strong>, I help clients and teams decide what's worth building, discard what isn't, and <strong>take full accountability from scope to production</strong>.</p>
+      <p class="hero-p" style="animation-delay:0.7s">A Master's in Technology Management and a background in linguistics come together in how I work. Studying language trained me to look for structure first, patterns, rules, exceptions, and that habit now shapes how I approach complex systems.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Let's talk →</a>
+        <a href="https://linkedin.com/in/uliana-khmel/" target="_blank" class="btn-outline">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="photo-blob"></div>
+      <img src="assets/profile.png" alt="Uliana Khmel" class="hero-photo">
+      <div class="float-chip">⭐ Ownership mindset</div>
+      <div class="float-chip">🚀 Scope to production</div>
+      <div class="float-chip">🧩 Order from chaos</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-wrap">
+  <div class="stats-strip">
+    <div class="stat"><div class="stat-num"><span class="cu" data-t="6">0</span><span>+</span></div><div class="stat-label">Years in project and delivery leadership</div></div>
+    <div class="stat"><div class="stat-num"><span class="cu" data-t="4">0</span><span>+</span></div><div class="stat-label">Years in business operations</div></div>
+    <div class="stat"><div class="stat-num"><span class="cu" data-t="80">0</span><span>%</span></div><div class="stat-label">Of annual company revenue: full delivery ownership of key accounts</div></div>
+    <div class="stat"><div class="stat-num"><span class="cu" data-t="2">0</span><span></span></div><div class="stat-label">Master&rsquo;s degrees with distinctions</div></div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="eyebrow">Where I've worked</div>
+    <h2 class="s-heading">Experience</h2>
+    <div class="exp-timeline">
+
+      <div class="exp-row">
+        <div class="exp-meta">
+          <div class="exp-date">Jun 2022 – Present</div>
+          <div class="exp-co">DreamProIT</div>
+        </div>
+        <div>
+          <div class="exp-role">COO &amp; Customer Experience Lead</div>
+          <ul class="exp-bullets">
+            <li>Standardized business operations by developing and implementing company-wide procedures and playbooks for project management, HR, sales, and software development.</li>
+            <li>Translated complex customer business requirements into technical goals, coordinating cross-functional teams to ensure software delivery aligned with client needs.</li>
+            <li>Supported U.S. market expansion and managed relationships with strategic enterprise customers.</li>
+            <li>Directed content strategy, branding, and copywriting for all company platforms, including the corporate blog and social media.</li>
+            <li>Orchestrated recruitment strategy and conducted interviews for a distributed team of 20+ full-time and hourly contractors.</li>
+            <li>Completed a 12-week intensive at the Legal Innovation Zone (Toronto Metropolitan University) to move a POC toward a market-ready MVP, focusing on initial customer development.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div class="exp-meta">
+          <div class="exp-date">May 2023 – Jun 2024</div>
+          <div class="exp-co">Govable.ai</div>
+        </div>
+        <div>
+          <div class="exp-role">Government Outreach</div>
+          <ul class="exp-bullets">
+            <li>Developed and executed outreach strategies to establish partnerships between the organization and government entities.</li>
+            <li>Served as an official participant at the 4th LegisTech Forum on behalf of the company, engaging in Q&amp;A with parliamentary speakers from Ukraine, Ireland, and Costa Rica on their modernization efforts.</li>
+            <li>Identified and vetted potential opportunities for collaboration with government agencies and relevant public sector organizations.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-row">
+        <div class="exp-meta">
+          <div class="exp-date">Dec 2019 – Apr 2022</div>
+          <div class="exp-co">Regulus Team</div>
+        </div>
+        <div>
+          <div class="exp-role">Project Manager</div>
+          <ul class="exp-bullets">
+            <li>Managed the full project lifecycle, including scope, budgeting, documentation, workload capacity, and client communications.</li>
+            <li>Acted as the primary point of contact for accounts generating 80% of the company's annual income.</li>
+            <li>Secured two long-term projects accounting for 50% of total annual revenue and led proactive lead generation and client nurturing.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <p class="exp-note">Before this, I spent 5 years writing content, with shorter stretches in administrative support at university and in customer experience at an outsourcing company.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="tech">
+  <canvas id="tech-canvas"></canvas>
+  <div class="tech-inner">
+    <div class="eyebrow" style="color:rgba(240,155,100,0.85)">Tools &amp; competencies</div>
+    <div class="tech-heading-white">Skills &amp; Tools</div>
+    <div class="skill-grid">
+      <div class="skill-card" style="transition-delay:0.05s"><div class="sk-name">Operations &amp; Strategy</div><div class="sk-tags"><span class="sk-tag">Business Operations (BizOps)</span><span class="sk-tag">Strategic Planning</span><span class="sk-tag">SOP Development</span><span class="sk-tag">Change Management</span><span class="sk-tag">Budgeting &amp; Resource Allocation</span></div></div>
+      <div class="skill-card" style="transition-delay:0.1s"><div class="sk-name">Project &amp; Product</div><div class="sk-tags"><span class="sk-tag">Full SDLC Management</span><span class="sk-tag">Agile Methodologies</span><span class="sk-tag">MVP Development</span><span class="sk-tag">Roadmap Planning</span><span class="sk-tag">Quality Assurance</span></div></div>
+      <div class="skill-card" style="transition-delay:0.15s"><div class="sk-name">Customer &amp; Growth</div><div class="sk-tags"><span class="sk-tag">Customer Experience (CX)</span><span class="sk-tag">Strategic Partnerships</span><span class="sk-tag">Account Management</span><span class="sk-tag">B2B Sales</span></div></div>
+      <div class="skill-card" style="transition-delay:0.2s"><div class="sk-name">Leadership &amp; HR</div><div class="sk-tags"><span class="sk-tag">Distributed Team Management</span><span class="sk-tag">Recruitment Strategy</span><span class="sk-tag">Performance Management</span><span class="sk-tag">Cross-functional Leadership</span></div></div>
+      <div class="skill-card" style="transition-delay:0.25s"><div class="sk-name">Tech &amp; Tools</div><div class="sk-tags"><span class="sk-tag">Atlassian Suite</span><span class="sk-tag">CRM Software</span><span class="sk-tag">CMS</span><span class="sk-tag">Technical Writing</span><span class="sk-tag">Figma</span><span class="sk-tag">Canva</span><span class="sk-tag">Balsamiq</span><span class="sk-tag">Git</span><span class="sk-tag">GitHub</span><span class="sk-tag">Visual Studio Code</span><span class="sk-tag">Claude Code</span></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" style="border-color:rgba(255,255,255,0.04)">
+
+<!-- SPEAKING & EVENTS -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="eyebrow">Speaking &amp; industry events</div>
+    <h2 class="s-heading">Speaking &amp; Events</h2>
+    <div class="carousel-wrap">
+      <button class="carousel-arrow carousel-prev" id="carousel-prev" aria-label="Previous">‹</button>
+      <div class="carousel-track" id="carousel-track">
+        <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Speaker</span><span class="ptag">InstaTrac</span><span class="ptag green">Legaltech</span></div><div class="proj-org">AI &amp; the Single-State Tracking Service Conference · Sept 2025</div><div class="proj-title">Hybrid Search: Technology Overview, Live Demo, and Development Insights</div><p class="proj-desc">Presented hybrid search to legislative tracking practitioners: how the technology works, a live demo, and what building it actually taught us.</p><a href="https://docs.google.com/presentation/d/1egoRvCb8Oc3ontyTdvkiftQckIVXjv7TBGCed-pndkM/edit?usp=sharing" target="_blank" rel="noopener" class="proj-link">Slide Deck ↗</a></div>
+        <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Panelist</span><span class="ptag">Bússola Tech</span><span class="ptag green">GovTech</span></div><div class="proj-org">LegisTech Forum · 4th Edition · Oct 2023</div><div class="proj-title">Parliamentary Modernization Sessions</div><p class="proj-desc">Served as a panelist questioning presenters from Ukraine&rsquo;s Verkhovna Rada, Costa Rica&rsquo;s Asamblea Legislativa, and Ireland&rsquo;s Oireachtas on their modernization efforts.</p><a href="https://video.bussola-tech.co/t/legistech-forum-2023" target="_blank" rel="noopener" class="proj-link">Session Recordings ↗</a></div>
+        <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Speaker</span><span class="ptag">Atlassian</span></div><div class="proj-org">Atlassian Team&rsquo;23 · Apr 2023</div><div class="proj-title">Building a Digital Team in Ukraine Powered by Atlassian Tools</div><p class="proj-desc">Spoke on building a Ukrainian digital team from the ground up during the war, using Jira Software, Jira Work Management, and Atlassian Marketplace tools to create a culture of transparency, accountability, and efficiency.</p><a href="https://events.atlassian.com/team23/v/s-1218338?i=wfHffUXNDu9OUaWop0x9HF-6tEc8WeEo" target="_blank" rel="noopener" class="proj-link">On-Demand Session ↗</a></div>
+      </div>
+      <button class="carousel-arrow carousel-next" id="carousel-next" aria-label="Next">›</button>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="max-width:none;padding:2rem 0;">
+  <div class="section-wrap">
+    <div class="eyebrow">Academic background</div>
+    <h2 class="s-heading">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon"><img src="assets/1.png" alt="UCU Business School" class="edu-logo"></div>
+        <div>
+          <div class="edu-degree">MSc (Magna Cum Laude), Technology Management</div>
+          <div class="edu-school">UCU Business School</div>
+          <div class="edu-thesis">Thesis: &ldquo;Designing a Productized Hybrid Search Development Service for Legislative Data&rdquo;</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><img src="assets/2.png" alt="Chernivtsi National University" class="edu-logo"></div>
+        <div>
+          <div class="edu-degree">MA (Hons), English Language &amp; Literature</div>
+          <div class="edu-school">Chernivtsi National University</div>
+          <div class="edu-thesis">Thesis: &ldquo;Pragmatic Idioms in Modern English-Language Cinematic Discourse&rdquo;</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon"><img src="assets/3.png" alt="Legal Innovation Zone" class="edu-logo"></div>
+        <div>
+          <div class="edu-degree"><a href="https://drive.google.com/file/d/1x6p5kqCfoTtRy5EEZ_LYyh0825G8i1zM/view?usp=drive_link" target="_blank" rel="noopener">Sprint Studio Alumna</a></div>
+          <div class="edu-school">Legal Innovation Zone at Toronto Metropolitan University</div>
+          <div class="edu-thesis" style="font-style:normal;">12-week program that helps future legal tech entrepreneurs develop their proof of concept into a market-ready product</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-wrap">
+    <div class="eyebrow">Selected writing &amp; features</div>
+    <h2 class="s-heading">Selected Publications</h2>
+    <div class="pub-filters">
+      <button class="pub-filter active" data-filter="all">Show All</button>
+      <button class="pub-filter" data-filter="Author">Author</button>
+      <button class="pub-filter" data-filter="Featured">Featured</button>
+    </div>
+    <div class="proj-grid" id="pub-grid">
+      <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Author</span><span class="ptag">LinkedIn</span></div><div class="proj-title"><a href="https://www.linkedin.com/pulse/what-i-didnt-expect-from-business-school-lesson-human-uliana-khmel-etkif/" target="_blank" rel="noopener">What I Didn&rsquo;t Expect from Business School: A Lesson in Human Influence ↗</a></div><p class="proj-desc">Reflection on how my MSc cohort, not the coursework, shaped the way I lead and listen today.</p></div>
+      <div class="proj-card"><div class="proj-tags"><span class="ptag green">Featured</span><span class="ptag">Legal Innovation Zone</span></div><div class="proj-title"><a href="https://www.torontomu.ca/zone-learning/legal-innovation-zone/news/blogs/2024/08/from-idea-to-decision---sprint-studio-grad-review---uliana-khmel/" target="_blank" rel="noopener">From Idea to Decision: Sprint Studio Grad Review ↗</a></div><p class="proj-desc">Interview on how the Sprint Studio program helped validate — and ultimately pause — a legal tech business model before over-investing in a solution that wasn&rsquo;t market-ready.</p></div>
+      <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Author</span><span class="ptag">LinkedIn</span></div><div class="proj-title"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7341495470290010115/" target="_blank" rel="noopener">Bias in Legal AI ↗</a></div><p class="proj-desc">Carousel on how AI trained on historical legal data can absorb under-representation, historical, judicial, and base-rate bias, and what responsible design requires to counter it.</p></div>
+      <div class="proj-card"><div class="proj-tags"><span class="ptag green">Featured</span><span class="ptag">Bússola Tech</span></div><div class="proj-title"><a href="https://www.linkedin.com/feed/update/urn:li:share:7107328398116478976/" target="_blank" rel="noopener">LegisTech Forum: The Modernisation Case of the Verkhovna Rada of Ukraine ↗</a></div><p class="proj-desc">Panel on Ukraine&rsquo;s parliamentary modernization, featuring me as one of the commentators.</p></div>
+      <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Author</span><span class="ptag">DreamProIT</span></div><div class="proj-title"><a href="https://www.linkedin.com/pulse/responsible-ai-core-guidelines-ethical-development-mriiapro-kaebe/" target="_blank" rel="noopener">Responsible AI: Core Guidelines for Ethical Development ↗</a></div><p class="proj-desc">Breakdown of five core principles for ethical AI development, and the risks of skipping them.</p></div>
+      <div class="proj-card"><div class="proj-tags"><span class="ptag green">Featured</span><span class="ptag">Atlassian</span></div><div class="proj-title"><a href="https://community.atlassian.com/forums/Teamwork-Collection-articles/Recap-from-Team-23/ba-p/2344598" target="_blank" rel="noopener">Recap from Team &rsquo;23 ↗</a></div><p class="proj-desc">Official Atlassian Community recap of Team&rsquo;23, listing my on-demand session, &ldquo;Building a Digital Team in Ukraine Powered by Atlassian Tools,&rdquo; among the conference&rsquo;s featured sessions.</p></div>
+      <div class="proj-card"><div class="proj-tags"><span class="ptag green">Featured</span><span class="ptag">DreamProIT</span></div><div class="proj-title"><a href="https://dreamproit.com/blog/2023-04-13-linguist-to-tech-COO/index.html" target="_blank" rel="noopener">Linguist to Tech COO ↗</a></div><p class="proj-desc">Profile on my path from studying linguistics to becoming COO at DreamProIT, and how my background shaped my approach to managing technical teams.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOBBIES -->
+<section id="hobbies">
+  <div class="hobbies-inner">
+    <div class="eyebrow">Off the Clock</div>
+    <h2 class="s-heading">Hobbies &amp; Interests</h2>
+    <div class="hobby-grid">
+      <div class="hobby-card"><div class="hobby-icon">📖</div><div class="hobby-title">Books &amp; Reading</div><div class="hobby-sub">I&rsquo;m rarely without a book in progress, usually five or six at once. I&rsquo;m a mood reader: deep in fantasy, with a steady return to contemporary fiction and a fresh dive into sci-fi. Terry Pratchett&rsquo;s Discworld is forever a favorite (30 books in, and still counting). J.R.R. Tolkien has my deepest respect as linguist and writer.</div></div>
+      <div class="hobby-card"><div class="hobby-icon">🧶</div><div class="hobby-title">Handmade &amp; Crochet</div><div class="hobby-sub">I like making things by hand: book nooks, embroidery, projects built from scratch, with crochet as my biggest passion. My largest project so far was made from 14 skeins of yarn, 120+ hours of work, with custom adjustments rather than a straight pattern.</div></div>
+      <div class="hobby-card"><div class="hobby-icon">🔤</div><div class="hobby-title">Languages &amp; Etymology</div><div class="hobby-sub">I like taking languages apart: their structure, history, the strange new shapes the current world is pushing them into. At university, I studied German, alongside some basics of French and Italian, then carried that curiosity on my own into a for-fun attempt at Norwegian (Jeg heter Uliana og jeg liker å lese bøker på engelsk).</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-wrap">
+    <div class="eyebrow">Get in touch</div>
+    <h2 class="s-heading">Open to collaboration, advisory work,<br>or the right next opportunity</h2>
+    <p class="contact-sub">I&rsquo;ve spent my career translating between software engineers and business, and I&rsquo;m always curious what others are working through. Let&rsquo;s talk!</p>
+    <div class="contact-direct">Email me at <span class="contact-email-row"><a href="mailto:uliana.consult@gmail.com">uliana.consult@gmail.com</a><button class="copy-btn" id="copy-email-btn" aria-label="Copy email address" onclick="copyEmail(this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></span></div>
+    <div class="contact-direct">Or connect on <a href="https://linkedin.com/in/uliana-khmel/" target="_blank" rel="noopener">LinkedIn ↗</a></div>
+  </div>
+</section>
+
+<footer><p>© 2026 Uliana Khmel · Powered by GitHub Pages · Design inspired by <a href="https://chehaka.github.io" target="_blank" rel="noopener">chehaka.github.io</a> ↗</p></footer>
+
+<script>
+/* ── CURSOR ── */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function rl(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(rl);})();
+document.querySelectorAll('a,button,.skill-card,.proj-card,.hobby-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='16px';cur.style.height='16px';ring.style.width='50px';ring.style.height='50px';ring.style.borderColor='rgba(233,118,43,0.65)';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(233,118,43,0.4)';});
+});
+
+/* ── NAV ── */
+const navEl=document.getElementById('nav');
+window.addEventListener('scroll',()=>navEl.classList.toggle('scrolled',window.scrollY>40),{passive:true});
+document.getElementById('hamburger').addEventListener('click',function(){this.classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');});
+function closeMob(){document.getElementById('hamburger').classList.remove('open');document.getElementById('mobileMenu').classList.remove('open');}
+const allS=document.querySelectorAll('section[id]'),navAs=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{let c='';allS.forEach(s=>{if(window.scrollY>=s.offsetTop-130)c=s.id;});navAs.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+c));},{passive:true});
+
+/* ── HERO TITLE WORD ANIMATION ── */
+const heroH1=document.getElementById('hero-h1');
+const heroText="Business Operations &amp; Project Management professional: <em>I own outcomes,</em> not just tasks.";
+const parts=heroText.split(/(<em>.*?<\/em>|\s)/);
+let delay=0;
+parts.forEach(p=>{
+  if(!p||p===' ')return;
+  const span=document.createElement('span');
+  span.className='hero-word';
+  span.style.animationDelay=delay+'s';
+  span.innerHTML=p+' ';
+  heroH1.appendChild(span);
+  delay+=0.07;
+});
+
+/* ── COUNT UP ── */
+const cuEls=document.querySelectorAll('.cu');
+const cuObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,tgt=+el.dataset.t,st=performance.now();
+    (function f(t){const p=Math.min((t-st)/1400,1),ease=1-Math.pow(1-p,3);el.textContent=Math.round(ease*tgt);if(p<1)requestAnimationFrame(f);})(st);
+    cuObs.unobserve(el);
+  });
+},{threshold:0.5});
+cuEls.forEach(el=>cuObs.observe(el));
+
+/* ── GENERIC SCROLL REVEAL ── */
+function reveal(sel,cls='vis'){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add(cls),i*65);obs.unobserve(e.target);}});
+  },{threshold:0.08});
+  document.querySelectorAll(sel).forEach(el=>obs.observe(el));
+}
+reveal('.exp-row');
+reveal('.proj-card');
+reveal('.edu-card');
+reveal('.skill-card');
+reveal('.hobby-card');
+
+/* ── SPEAKING CAROUSEL ── */
+(function(){
+  const track=document.getElementById('carousel-track');
+  const wrap=track.closest('.carousel-wrap');
+  const prev=document.getElementById('carousel-prev');
+  const next=document.getElementById('carousel-next');
+  function step(){const card=track.querySelector('.proj-card');return card?card.getBoundingClientRect().width+18.4:400;}
+  prev.addEventListener('click',()=>track.scrollBy({left:-step(),behavior:'smooth'}));
+  next.addEventListener('click',()=>track.scrollBy({left:step(),behavior:'smooth'}));
+  function updateFades(){
+    const max=track.scrollWidth-track.clientWidth;
+    wrap.classList.toggle('fade-left',track.scrollLeft>4);
+    wrap.classList.toggle('fade-right',track.scrollLeft<max-4);
+  }
+  track.addEventListener('scroll',updateFades,{passive:true});
+  window.addEventListener('resize',updateFades);
+  updateFades();
+})();
+
+/* ── PUBLICATIONS FILTER ── */
+const pubFilters=document.querySelectorAll('.pub-filter');
+const pubCards=document.querySelectorAll('#pub-grid .proj-card');
+pubFilters.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    pubFilters.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const filter=btn.dataset.filter;
+    pubCards.forEach(card=>{
+      const firstTag=card.querySelector('.proj-tags .ptag');
+      const match=filter==='all'||(firstTag&&firstTag.textContent.trim()===filter);
+      card.style.display=match?'':'none';
+    });
+  });
+});
+
+/* ── COPY EMAIL ── */
+function copyEmail(btn){
+  const email='uliana.consult@gmail.com';
+  const showCopied=()=>{
+    const original=btn.innerHTML;
+    btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+    setTimeout(()=>{btn.innerHTML=original;},1500);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(email).then(showCopied,()=>fallbackCopy(email,showCopied));
+  }else{
+    fallbackCopy(email,showCopied);
+  }
+}
+function fallbackCopy(text,onDone){
+  const ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');onDone();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ════════════════════════════════
+   HERO CANVAS — floating data network
+════════════════════════════════ */
+(function(){
+  const c=document.getElementById('hero-canvas'),ctx=c.getContext('2d');
+  let W,H,nodes=[],mouse={x:-999,y:-999};
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  resize();window.addEventListener('resize',()=>{resize();init();});
+  c.parentElement.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  c.parentElement.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999;});
+  function init(){
+    nodes=[];
+    const n=Math.min(60,Math.floor(W*H/12000));
+    for(let i=0;i<n;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.45,vy:(Math.random()-.5)*.45,r:Math.random()*2.2+0.8,a:Math.random()*.3+0.08,c:Math.random()<.15?'233,118,43':'0,0,0'});
+  }
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(let i=0;i<nodes.length;i++){for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<140){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(0,0,0,${(1-d/140)*.07})`;ctx.lineWidth=.7;ctx.stroke();}}}
+    nodes.forEach(n=>{n.x+=n.vx;n.y+=n.vy;if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;const md=Math.hypot(n.x-mouse.x,n.y-mouse.y),boost=md<110?Math.max(0,1-md/110):0;if(boost>0){const a=Math.atan2(n.y-mouse.y,n.x-mouse.x);n.x+=Math.cos(a)*boost*2;n.y+=Math.sin(a)*boost*2;}ctx.beginPath();ctx.arc(n.x,n.y,n.r+boost*2.5,0,Math.PI*2);ctx.fillStyle=`rgba(${n.c},${n.a+boost*.28})`;ctx.fill();});
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ════════════════════════════════
+   TECH CANVAS — repulsive particle field
+════════════════════════════════ */
+(function(){
+  const c=document.getElementById('tech-canvas'),ctx=c.getContext('2d');
+  let W,H,particles=[],mouse={x:-999,y:-999};
+  const techEl=document.getElementById('tech');
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight;}
+  resize();window.addEventListener('resize',()=>{resize();init();});
+  techEl.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  techEl.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999;});
+  function init(){
+    particles=[];
+    const n=Math.min(100,Math.floor(W*H/7000));
+    for(let i=0;i<n;i++)particles.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.6+.4,a:Math.random()*.2+.04,gold:Math.random()>.2});
+  }
+  init();
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      const md=Math.hypot(p.x-mouse.x,p.y-mouse.y),rep=md<130&&md>0;
+      let glow=0;
+      if(rep){const f=(1-md/130)*2.8,ang=Math.atan2(p.y-mouse.y,p.x-mouse.x);p.x+=Math.cos(ang)*f;p.y+=Math.sin(ang)*f;glow=1-md/130;}
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r+glow*3,0,Math.PI*2);
+      ctx.fillStyle=p.gold?`rgba(240,155,100,${p.a+glow*.35})`:`rgba(233,118,43,${p.a+glow*.35})`;
+      ctx.fill();
+    });
+    if(mouse.x>0){particles.forEach(p=>{const d=Math.hypot(p.x-mouse.x,p.y-mouse.y);if(d<150){ctx.beginPath();ctx.moveTo(mouse.x,mouse.y);ctx.lineTo(p.x,p.y);ctx.strokeStyle=`rgba(233,118,43,${(1-d/150)*.16})`;ctx.lineWidth=.65;ctx.stroke();}});}
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
