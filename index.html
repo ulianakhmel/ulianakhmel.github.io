@@ -185,6 +185,9 @@ nav.scrolled{background:rgba(235,225,209,0.94);backdrop-filter:blur(20px);box-sh
 .proj-title a{color:inherit;text-decoration:none;border-bottom:1.5px solid var(--gold-light);transition:border-color 0.2s;}
 .proj-title a:hover{border-color:var(--gold);}
 .proj-desc{font-size:0.82rem;color:var(--ink3);line-height:1.72;}
+.proj-card.tall{grid-row:span 3;}
+.proj-embed{margin-top:1.1rem;border-radius:0.75rem;overflow:hidden;border:1px solid var(--border);}
+.proj-embed iframe{display:block;width:100%;height:399px;border:0;}
 
 /* EDUCATION */
 #education{background:var(--sand);border-radius:2rem;margin:0 2.5rem;}
@@ -246,6 +249,7 @@ footer a{color:var(--gold-dark);text-decoration:none;font-weight:600;}
   .exp-row{grid-template-columns:1fr;gap:0.6rem;}
   .exp-meta::after{display:none;}
   .proj-grid{grid-template-columns:1fr;}
+  .proj-card.tall{grid-row:auto;}
   .skill-grid{grid-template-columns:1fr;}
   .carousel-track .proj-card{flex:0 0 85vw;}
   .carousel-arrow{display:none;}
@@ -464,6 +468,7 @@ footer a{color:var(--gold-dark);text-decoration:none;font-weight:600;}
       <button class="pub-filter" data-filter="Featured">Featured</button>
     </div>
     <div class="proj-grid" id="pub-grid">
+      <div class="proj-card tall"><div class="proj-tags"><span class="ptag green">Featured</span><span class="ptag">UCU Business School</span></div><div class="proj-title"><a href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7505950455630589953/" target="_blank" rel="noopener">Student Voices: MSc in Technology Management ↗</a></div><p class="proj-desc">Short program video for UCU Business School, alongside a fellow student. My take: the coursework clicked right away with my real work, helping me step back and see it from a wider angle.</p><div class="proj-embed"><iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7505950455630589953?compact=1" loading="lazy" allowfullscreen title="UCU Business School feature video"></iframe></div></div>
       <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Author</span><span class="ptag">LinkedIn</span></div><div class="proj-title"><a href="https://www.linkedin.com/pulse/what-i-didnt-expect-from-business-school-lesson-human-uliana-khmel-etkif/" target="_blank" rel="noopener">What I Didn&rsquo;t Expect from Business School: A Lesson in Human Influence ↗</a></div><p class="proj-desc">Reflection on how my MSc cohort, not the coursework, shaped the way I lead and listen today.</p></div>
       <div class="proj-card"><div class="proj-tags"><span class="ptag green">Featured</span><span class="ptag">Legal Innovation Zone</span></div><div class="proj-title"><a href="https://www.torontomu.ca/zone-learning/legal-innovation-zone/news/blogs/2024/08/from-idea-to-decision---sprint-studio-grad-review---uliana-khmel/" target="_blank" rel="noopener">From Idea to Decision: Sprint Studio Grad Review ↗</a></div><p class="proj-desc">Interview on how the Sprint Studio program helped validate — and ultimately pause — a legal tech business model before over-investing in a solution that wasn&rsquo;t market-ready.</p></div>
       <div class="proj-card"><div class="proj-tags"><span class="ptag hot">Author</span><span class="ptag">LinkedIn</span></div><div class="proj-title"><a href="https://www.linkedin.com/feed/update/urn:li:activity:7341495470290010115/" target="_blank" rel="noopener">Bias in Legal AI ↗</a></div><p class="proj-desc">Carousel on how AI trained on historical legal data can absorb under-representation, historical, judicial, and base-rate bias, and what responsible design requires to counter it.</p></div>
