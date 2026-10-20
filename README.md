@@ -1,6 +1,6 @@
 # Uliana Khmel — Personal Website
 
-This repository contains the source code for the personal website of Uliana Khmel, a Business Operations & Project Management professional, currently serving as COO & Customer Experience Lead at DreamProIT.
+This repository contains the source code for the personal website of Uliana Khmel, a Business Operations & Project Management professional, currently at BrainKey and supporting DreamProIT as a Business Operations Consultant.
 
 🌐 Live Site: [https://ulianakhmel.github.io](https://ulianakhmel.github.io/)
 
